@@ -1,5 +1,6 @@
 import React, { Children } from 'react'
-import Navbar from '../Components/Navbar'
+import Navbar from './Navbar'
+import Footer from './Footer'
 
 function Layout({children}) {
   return (
@@ -8,6 +9,7 @@ function Layout({children}) {
         <main className='w-full h-full'>
             {children}
         </main>
+        <Footer />
     </section>
   )
 }
