@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Showcase</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .product-card {
+            background-color: rgb(0, 0, 0);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+        .product-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .product-category {
+            background-color: #e0e0e0;
+            color: #333;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            display: inline-block;
+        }
+        .product-brand {
+            color: #666;
+            font-size: 14px;
+        }
+        .product-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #4a4a4a;
+            margin: 10px 0;
+        }
+        .product-rating {
+            display: flex;
+            align-items: center;
+        }
+        .star-rating {
+            color: #ffd700;
+            margin-right: 5px;
+        }
+        .product-color {
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Product Showcase</h1>
+        <div id="productGrid" class="product-grid"></div>
+    </div>
+
+    <script>
+        const products = [
+            {
+                id: 1,
+                name: 'Gaming PC - Titan X Series',
+                category: 'Joueur sur PC',
+                brand: 'Corsair',
+                color: 'Black',
+                price: 1200,
+                rating: 4.7,
+                image: 'https://cdn11.bigcommerce.com/s-ms4wz8cgi2/images/stencil/590x590/products/100124/26590/360D_3__92063.1713948053.png?c=1'
+            },
+            {
+                id: 2,
+                name: 'Alienware Aurora R15',
+                category: 'Joueur sur PC',
+                brand: 'Alienware',
+                color: 'Black',
+                price: 1600,
+                rating: 4.8,
+                image: 'https://m.media-amazon.com/images/I/61VVncm-6zL.__AC_SX300_SY300_QL70_FMwebp_.jpg'
+            },
+            {
+                id: 3,
+                name: 'CyberPowerPC Gamer Xtreme',
+                category: 'Joueur sur PC',
+                brand: 'CyberPowerPC',
+                color: 'Black',
+                price: 1300,
+                rating: 4.6,
+                image: 'https://m.media-amazon.com/images/I/81hHX5f2QAL._AC_SL1500_.jpg'
+            },
+            {
+                id: 4,
+                name: 'Corsair Vengeance i7200',
+                category: 'Joueur sur PC',
+                brand: 'Corsair',
+                color: 'Black',
+                price: 2000,
+                rating: 4.9,
+                image: 'https://m.media-amazon.com/images/I/71l88OBZLIL._AC_UY327_FMwebp_QL65_.jpg'
+            },
+            {
+                id: 5,
+                name: 'Laptop - ASUS ROG Zephyrus',
+                category: 'Ordinateur portable',
+                brand: 'ASUS',
+                color: 'Gray',
+                price: 1500,
+                rating: 4.5,
+                image: 'https://dlcdnwebimgs.asus.com/gain/1B8BFF75-43FC-4D5E-9B77-A8015A23B198'
+            },
+            
+    {
+        id: 6,
+        name: 'Laptop - Dell XPS 13',
+        category: 'Ordinateur portable',
+        brand: 'Dell',
+        color: 'Platinum Silver',
+        price: 999,
+        rating: 4.8,
+        image: 'https://m.media-amazon.com/images/I/61XxMkA7EAL._AC_UY327_FMwebp_QL65_.jpg'
+    },
+    {
+        id: 7,
+        name: 'MacBook Pro 16-inch',
+        category: 'Ordinateur portable',
+        brand: 'Apple',
+        color: 'Silver',
+        price: 2399,
+        rating: 4.9,
+        image: 'https://m.media-amazon.com/images/I/61bwiPRcv2L._AC_UY327_FMwebp_QL65_.jpg'
+    },
+    {
+        id: 8,
+        name: 'HP Spectre x360 14',
+        category: 'Ordinateur portable',
+        brand: 'HP',
+        color: 'Nightfall Black',
+        price: 1399,
+        rating: 3,
+        image: 'https://m.media-amazon.com/images/I/51FNfOZbRdL._AC_UY327_FMwebp_QL65_.jpg'
+    },
+    {
+        id: 9,
+        name: 'iPhone 15 Pro',
+        category: 'Téléphone',
+        brand: 'Apple',
+        color: 'Space Gray',
+        price: 999,
+        rating: 4.8,
+        image: 'https://icon2.cleanpng.com/20240415/fxh/transparent-camera-lens-metal-phone-back-with-round-camera-lens661df454448081.12055252.webp'
+    },
+    {
+        id: 10,
+        name: 'Samsung Galaxy S23 Ultra',
+        category: 'Téléphone',
+        brand: 'Samsung',
+        color: 'Phantom Black',
+        price: 1200,
+        rating: 4.9,
+        image: 'https://m.media-amazon.com/images/I/619vXcl8bRL._AC_UY327_FMwebp_QL65_.jpg'
+    },
+    {
+        id: 11,
+        name: 'Google Pixel 8 Pro',
+        category: 'Téléphone',
+        brand: 'Google',
+        color: 'Obsidian',
+        price: 900,
+        rating: 4.7,
+        image: 'https://m.media-amazon.com/images/I/610q+UV1bcL._AC_UY327_FMwebp_QL65_.jpg'
+    },
+    {
+        id: 12,
+        name: 'OnePlus 11 5G',
+        category: 'Téléphone',
+        brand: 'OnePlus',
+        color: 'Eternal Green',
+        price: 899,
+        rating: 4.6,
+        image: 'https://m.media-amazon.com/images/I/71NW2QaIzlL._AC_UY327_FMwebp_QL65_.jpg'
+    },
+    {
+        id: 13,
+        name: 'Gaming Mouse - Logitech G502',
+        category: 'Accessoires',
+        brand: 'Logitech',
+        color: 'Black',
+        price: 70,
+        rating: 4.6,
+        image: 'https://m.media-amazon.com/images/I/61LaIVlVOwL._AC_UY327_FMwebp_QL65_.jpg'
+    },
+    {
+        id: 14,
+        name: 'Keyboard - Razer BlackWidow V3',
+        category: 'Accessoires',
+        brand: 'Razer',
+        color: 'Black',
+        price: 129,
+        rating: 4.7,
+        image: 'https://m.media-amazon.com/images/I/71OAwYenQUL._AC_UY327_FMwebp_QL65_.jpg'
+    },
+    {
+        id: 15,
+        name: 'Gaming Mousepad - SteelSeries QcK',
+        category: 'Accessoires',
+        brand: 'SteelSeries',
+        color: 'Black',
+        price: 25,
+        rating: 4.5,
+        image: 'https://m.media-amazon.com/images/I/41ehSSG5VlL._AC_UY327_FMwebp_QL65_.jpg'
+    },
+    {
+        id: 16,
+        name: 'Wireless Gaming Headset - Logitech G Pro X',
+        category: 'Accessoires',
+        brand: 'Logitech',
+        color: 'Black',
+        price: 150,
+        rating: 4.8,
+        image: 'https://m.media-amazon.com/images/I/51Vqs9NufmL._AC_UY327_FMwebp_QL65_.jpg'
+    },
+    {
+        id: 17,
+        name: 'Headset - SteelSeries Arctis 7',
+        category: 'Périphérique audio',
+        brand: 'SteelSeries',
+        color: 'Black',
+        price: 150,
+        rating: 4.5,
+        image: 'https://m.media-amazon.com/images/I/71exY5PBroL._AC_UY327_FMwebp_QL65_.jpg'
+    },
+    {
+        id: 18,
+        name: 'Gaming Headset - Logitech G533',
+        category: 'Périphérique audio',
+        brand: 'Logitech',
+        color: 'Black',
+        price: 129,
+        rating: 4.6,
+        image: 'https://m.media-amazon.com/images/I/61hRlwVl79L._AC_UY327_FMwebp_QL65_.jpg'
+    },
+    {
+        id: 19,
+        name: 'Sennheiser GSP 600 Gaming Headset',
+        category: 'Périphérique audio',
+        brand: 'Sennheiser',
+        color: 'Black/Red',
+        price: 250,
+        rating: 4.7,
+        image: 'https://m.media-amazon.com/images/I/7138PilzM3L._AC_UY327_FMwebp_QL65_.jpg'
+    },
+    {
+        id: 20,
+        name: 'Bose QuietComfort 35 II',
+        category: 'Périphérique audio',
+        brand: 'Bose',
+        color: 'Silver',
+        price: 299,
+        rating: 4.8,
+        image: 'https://m.media-amazon.com/images/I/51QeS0jkx-L._AC_UY327_FMwebp_QL65_.jpg'
+    },
+    {
+        id: 21,
+        name: 'Graphics Card - NVIDIA GeForce RTX 4080',
+        category: 'Composants',
+        brand: 'NVIDIA',
+        color: 'Green/Black',
+        price: 1300,
+        rating: 4.9,
+        image: 'https://m.media-amazon.com/images/I/81rCZZvkIVL._AC_UY327_FMwebp_QL65_.jpg'
+    },
+    {
+        id: 22,
+        name: 'Intel Core i9-13900K Processor',
+        category: 'Composants',
+        brand: 'Intel',
+        color: 'Silver',
+        price: 700,
+        rating: 4.8,
+        image: 'https://m.media-amazon.com/images/I/61My4F2-XUL._AC_UY327_FMwebp_QL65_.jpg'
+    },
+    {
+        id: 23,
+        name: 'Corsair Vengeance LPX 16GB RAM',
+        category: 'Composants',
+        brand: 'Corsair',
+        color: 'Black',
+        price: 80,
+        rating: 4.7,
+        image: 'https://m.media-amazon.com/images/I/61wCOVcyvFL._AC_UY327_FMwebp_QL65_.jpg'
+    },
+    {
+        id: 24,
+        name: 'Samsung 970 EVO Plus 1TB SSD',
+        category: 'Composants',
+        brand: 'Samsung',
+        color: 'Black',
+        price: 150,
+        rating: 4.9,
+        image: 'https://m.media-amazon.com/images/I/71OYNmVRFhL._AC_UY327_FMwebp_QL65_.jpg'
+    }
+
+
+        ];
+
+        function createProductCard(product) {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+
+            card.innerHTML = `
+                <img src="${product.image}" alt="${product.name}" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">${product.name}</div>
+                    <div class="product-category">${product.category}</div>
+                    <div class="product-brand">${product.brand}</div>
+                    <div class="product-price">$${product.price}</div>
+                    <div class="product-rating">
+                        ${createStarRating(product.rating)}
+                        <span>${product.rating.toFixed(1)}</span>
+                    </div>
+                    <div class="product-color">Color: ${product.color}</div>
+                </div>
+            `;
+
+            return card;
+        }
+
+        function createStarRating(rating) {
+            const fullStars = Math.floor(rating);
+            const halfStar = rating % 1 >= 0.5;
+            const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+
+            return `
+                ${Array(fullStars).fill('<i data-lucide="star" class="star-rating"></i>').join('')}
+                ${halfStar ? '<i data-lucide="star-half" class="star-rating"></i>' : ''}
+                ${Array(emptyStars).fill('<i data-lucide="star" class="star-rating" style="color: #d3d3d3;"></i>').join('')}
+            `;
+        }
+
+        function renderProducts() {
+            const productGrid = document.getElementById('productGrid');
+            products.forEach(product => {
+                const card = createProductCard(product);
+                productGrid.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        document.addEventListener('DOMContentLoaded', renderProducts);
+    </script>
+</body>
+</html>
+
