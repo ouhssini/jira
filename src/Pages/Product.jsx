@@ -4,7 +4,7 @@ import { Facebook, LoaderCircle, Twitter } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { BsTwitterX } from 'react-icons/bs'
 import { FaFacebook, FaInstagram, FaPinterest } from 'react-icons/fa'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Reviews from '../Components/Reviews'
 import DemiCard from '../Components/DemiCard'
 
@@ -13,6 +13,7 @@ function Product() {
     const [product, setProduct] = useState({})
     const [loading, setLoading] = useState(true)
     const [relatedProducts, setRelatedProducts] = useState([])
+    const navigate = useNavigate();
     useEffect(() => {
         const fetchProduct = async () => {
             setLoading(true);
@@ -38,7 +39,7 @@ function Product() {
     console.log(product)
 
     return (
-        <div className='w-full flex flex-col items-center'>
+        <div className='w-full flex flex-col mt-5 items-center'>
             {loading ? <div className='w-full h-[30vh] flex items-center justify-center'>
                 <LoaderCircle size={40} className='animate-spin' />
             </div> :
@@ -93,13 +94,14 @@ function Product() {
                 </>
             }
             <h1 className='font-bold text-4xl mt-4'>Reviews</h1>
-            <div className='w-[80%] border-y-2 flex items-center justify-center'>
+            <div className='w-[80%] border-t-2 flex items-center justify-center'>
                 <Reviews reviews={product?.reviews} />
             </div>
-            <div className='w-full flex items-center justify-evenly px-10'>
+            <h1 className='font-bold text-4xl mt-4'>Related Products</h1>
+            <div className='w-[80%] flex items-center border-y-2 mb-3 justify-evenly p-6'>
                 {relatedProducts.length > 0 ? (
                     relatedProducts.map((item) => (
-                        <DemiCard key={item.id} product={item} />
+                        <DemiCard key={item.id} img={item.image} click={() => navigate(`/product/${item.id}`)} title={item.name} category={item.category} price={item.price} rating={item.rating} />
                     ))
                 ) : (
                     <p>No related products found.</p>
