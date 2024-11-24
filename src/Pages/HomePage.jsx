@@ -14,6 +14,7 @@ function HomePage() {
     const navigate = useNavigate();
     const limitedProducts = products.slice(0, 8);
     const [search, setSearch] = useState('');
+    const [categories , setCategories] = useState([]);
     const toProduct = (id) => {
         navigate(`/product/${id}`);
     };
@@ -26,6 +27,7 @@ function HomePage() {
                 setLoading(true);
                 const res = await axios.get('https://digitalgifter.store/products.php');
                 setProducts(res.data);
+                setCategories([...new Set(res.data.map((product) => product.category))]);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching products:', error);
@@ -43,7 +45,7 @@ function HomePage() {
                 <aside className="w-[25%] p-8 flex flex-col">
                     <h1 className="font-bold text-md mb-2">Categories</h1>
                     <ul className="w-full flex flex-col border-b">
-                        {['PC Gamer', 'Laptop', 'Phone', 'Accessories', 'Audio Devices', 'Components'].map((category) => (
+                        {categories.map((category) => (
                             <Tabs key={category}>{category}</Tabs>
                         ))}
                     </ul>
@@ -57,7 +59,7 @@ function HomePage() {
                     <div className="w-full flex flex-col">
                         <div className="w-full h-20 flex items-center px-10">
                             <div className="w-[50%] h-full flex items-center gap-4">
-                                <h1 className='font-bold'>Alphabets</h1>
+                                {/* <h1 className='font-bold'>Alphabets</h1> */}
                             </div>
                             <div className="w-[50%] h-full flex justify-end items-center gap-4">
                                     <div className='w-[40%] flex items-center h-10 border-b'>
@@ -67,7 +69,7 @@ function HomePage() {
                                     {products.length} Product
                             </div>
                         </div>
-                        <div className="w-full flex flex-wrap gap-8 bg-neutral-900 rounded-md p-5">
+                        <div className="w-full flex flex-wrap gap-8 bg-neutral-700 rounded-l-md p-5 justify-center">
                             {(more ? products : limitedProducts).map((product, index) => (
                                 <Card
                                     key={index}

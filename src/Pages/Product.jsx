@@ -50,14 +50,14 @@ function Product() {
                 <LoaderCircle size={40} className='animate-spin' />
             </div> :
                 <>
-                    <div className='w-[80%] bg-neutral-900 rounded-md h-[70vh] flex items-center'>
+                    <div className='w-[80%] bg-neutral-800 rounded-md  flex items-center'>
                         <div className='w-[50%] h-full  flex gap-4 flex-col items-center'>
                             <img src={src} className='w-[60%] h-[70%] object-cover rounded' alt="" />
                             <div className='w-full h-16 px-5 flex justify-center items-center gap-4'>
                                 <img
                                     src={product?.image}
                                     onClick={() => handleImages(product?.image)}
-                                    className={src === product?.image ? 'w-16 h-full border-2 border-white cursor-pointer rounded-xl' : 'w-16 h-full cursor-pointer'}
+                                    className={src === product?.image ? 'w-16 h-full border-4 transation-all duration-200 border-yellow-500  cursor-pointer rounded-xl' : 'w-16 h-full cursor-pointer'}
                                     alt="main product"
                                 />                                {
                                     product?.images.map((image, index) => (
@@ -66,7 +66,7 @@ function Product() {
                                             onClick={() => handleImages(image)}
                                             className={src === image ? 'w-16 h-full cursor-pointer rounded-xl' : 'w-16 h-full cursor-pointer'}
                                         >
-                                            <img src={image} className={src === image ? 'w-16 h-full border-2 border-white cursor-pointer rounded-xl' : 'w-16 h-full cursor-pointer'} alt={`product image ${index}`} />
+                                            <img src={image} className={src === image ? 'w-16 h-full border-4 transation-all duration-200 border-yellow-500  cursor-pointer rounded-xl' : 'w-16 h-full cursor-pointer'} alt={`product image ${index}`} />
                                         </div>
                                     ))
                                 }
@@ -82,7 +82,7 @@ function Product() {
                             <p className='w-full h-[10vh] flex items-center'>
                                 {product?.description}
                             </p>
-                            <div className='w-full h-12 flex items-center gap-5'>
+                            <div className='w-full h-12 flex items-center gap-5 my-3'>
                                 <input placeholder='1' min={1} type="number" className='w-[10%] px-1 rounded-md h-full bg-black text-white flex items-center justify-center border' />
                                 <button className='w-full h-full bg-white rounded-md text-black flex items-center justify-center'>
                                     Add To Cart
