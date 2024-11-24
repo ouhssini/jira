@@ -1,6 +1,7 @@
 import React from 'react'
 import Marquee from "./ui/marquee";
 import { cn } from "../lib/utils";
+import { Rate } from 'antd';
 
 
 const ReviewCard = ({
@@ -18,8 +19,9 @@ const ReviewCard = ({
         >
             <div className="flex flex-row items-center gap-2">
                 <div className="flex flex-col">
-                    <figcaption className="text-sm font-medium">
+                    <figcaption className="text-sm flex items-center gap-3 font-medium">
                         {name}
+                        <Rate allowHalf className='text-sm' disabled value={rating} />
                     </figcaption>
                     <p className="text-xs font-medium text-gray-400">{name}</p>
                 </div>

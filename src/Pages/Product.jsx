@@ -13,6 +13,8 @@ function Product() {
     const [product, setProduct] = useState({})
     const [loading, setLoading] = useState(true)
     const [relatedProducts, setRelatedProducts] = useState([])
+    const [src, setSrc] = useState()
+    const [active, setActive] = useState(false)
     const navigate = useNavigate();
     useEffect(() => {
         const fetchProduct = async () => {
@@ -20,6 +22,7 @@ function Product() {
             try {
                 const res = await axios.get(`https://digitalgifter.store/products.php?id=${id}`);
                 setProduct(res.data[0]);
+                setSrc(res.data[0]?.image || '')
 
                 const allProducts = await axios.get(`https://digitalgifter.store/products.php`)
                 const related = allProducts.data.filter(
@@ -35,8 +38,11 @@ function Product() {
         fetchProduct();
     }, [id]);
 
+    const handleImages = (img) => {
+        setSrc(img)
+    }
+
     const reviewsLength = product?.reviews?.length
-    console.log(product)
 
     return (
         <div className='w-full flex flex-col mt-5 items-center'>
@@ -44,14 +50,26 @@ function Product() {
                 <LoaderCircle size={40} className='animate-spin' />
             </div> :
                 <>
-                    <div className='w-full h-[70vh] flex items-center'>
+                    <div className='w-[80%] bg-neutral-900 rounded-md h-[70vh] flex items-center'>
                         <div className='w-[50%] h-full  flex gap-4 flex-col items-center'>
-                            <img src={product?.image} className='w-[60%] h-[70%] object-cover rounded' alt="" />
+                            <img src={src} className='w-[60%] h-[70%] object-cover rounded' alt="" />
                             <div className='w-full h-16 px-5 flex justify-center items-center gap-4'>
-                                <img src={product?.image} className='w-16 h-full' alt="" />
-                                <img src={product?.images?.[0]} className='w-16 h-full' alt="" />
-                                <img src={product?.images?.[1]} className='w-16 h-full' alt="" />
-                                <img src={product?.images?.[2]} className='w-16 h-full' alt="" />
+                                <img
+                                    src={product?.image}
+                                    onClick={() => handleImages(product?.image)}
+                                    className={src === product?.image ? 'w-16 h-full border-2 border-white cursor-pointer rounded-xl' : 'w-16 h-full cursor-pointer'}
+                                    alt="main product"
+                                />                                {
+                                    product?.images.map((image, index) => (
+                                        <div
+                                            key={index}
+                                            onClick={() => handleImages(image)}
+                                            className={src === image ? 'w-16 h-full cursor-pointer rounded-xl' : 'w-16 h-full cursor-pointer'}
+                                        >
+                                            <img src={image} className={src === image ? 'w-16 h-full border-2 border-white cursor-pointer rounded-xl' : 'w-16 h-full cursor-pointer'} alt={`product image ${index}`} />
+                                        </div>
+                                    ))
+                                }
                             </div>
                         </div>
                         <div className='w-[50%] gap-2 h-full flex flex-col p-8'>
@@ -65,7 +83,7 @@ function Product() {
                                 {product?.description}
                             </p>
                             <div className='w-full h-12 flex items-center gap-5'>
-                                <input placeholder='1' min={1} type="number" className='w-[10%] px-4 rounded-md h-full bg-black text-white flex items-center justify-center border' />
+                                <input placeholder='1' min={1} type="number" className='w-[10%] px-1 rounded-md h-full bg-black text-white flex items-center justify-center border' />
                                 <button className='w-full h-full bg-white rounded-md text-black flex items-center justify-center'>
                                     Add To Cart
                                 </button>
@@ -91,23 +109,24 @@ function Product() {
                             </div>
                         </div>
                     </div>
+                    <h1 className='font-bold text-4xl mt-4'>Reviews</h1>
+                    <div className='w-[80%] border-t-2 flex items-center justify-center'>
+                        <Reviews reviews={product?.reviews} />
+                    </div>
+                    <h1 className='font-bold text-4xl mt-4'>Related Products</h1>
+                    <div className='w-[80%] flex items-center border-y-2 mb-3 justify-evenly p-6'>
+                        {relatedProducts.length > 0 ? (
+                            relatedProducts.map((item) => (
+                                <DemiCard key={item.id} img={item.image} click={() => navigate(`/product/${item.id}`)} title={item.name} category={item.category} price={item.price} rating={item.rating} />
+                            ))
+                        ) : (
+                            <p>No related products found.</p>
+                        )}
+
+                    </div>
                 </>
             }
-            <h1 className='font-bold text-4xl mt-4'>Reviews</h1>
-            <div className='w-[80%] border-t-2 flex items-center justify-center'>
-                <Reviews reviews={product?.reviews} />
-            </div>
-            <h1 className='font-bold text-4xl mt-4'>Related Products</h1>
-            <div className='w-[80%] flex items-center border-y-2 mb-3 justify-evenly p-6'>
-                {relatedProducts.length > 0 ? (
-                    relatedProducts.map((item) => (
-                        <DemiCard key={item.id} img={item.image} click={() => navigate(`/product/${item.id}`)} title={item.name} category={item.category} price={item.price} rating={item.rating} />
-                    ))
-                ) : (
-                    <p>No related products found.</p>
-                )}
 
-            </div>
         </div>
     )
 }
