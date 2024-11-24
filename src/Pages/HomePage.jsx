@@ -13,15 +13,12 @@ function HomePage() {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     const limitedProducts = products.slice(0, 8);
-
-    const alphabets = [
-        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-        'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-    ];
-
+    const [search, setSearch] = useState('');
     const toProduct = (id) => {
         navigate(`/product/${id}`);
     };
+
+    
 
     useEffect(() => {
         const fetchData = async () => {
@@ -65,12 +62,12 @@ function HomePage() {
                             <div className="w-[50%] h-full flex justify-end items-center gap-4">
                                     <div className='w-[40%] flex items-center h-10 border-b'>
                                             <Search size={20} className='text-white'/>
-                                            <input type="text" placeholder='Search' className='w-full px-2 h-full bg-transparent outline-none border-none text-white' />
+                                            <input onChange={(e) => setSearch(e.target.value)} value={search} type="text" placeholder='Search' className='w-full px-2 h-full bg-transparent outline-none border-none text-white' />
                                     </div>
                                     {products.length} Product
                             </div>
                         </div>
-                        <div className="w-full flex flex-wrap gap-8 bg-gray-600/20 rounded-md p-5">
+                        <div className="w-full flex flex-wrap gap-8 bg-neutral-900 rounded-md p-5">
                             {(more ? products : limitedProducts).map((product, index) => (
                                 <Card
                                     key={index}
