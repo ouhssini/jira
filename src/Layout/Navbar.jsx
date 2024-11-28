@@ -42,12 +42,12 @@ const MobileView = ({ click }) => {
       initial={{ x: '100%' }}
       animate={{ x: '0%', transition: { duration: 0.5, ease: 'easeInOut' } }}
       exit={{ x: '100%', transition: { duration: 0.5, ease: 'easeInOut' } }}
-      className='w-[80%] h-screen bg-neutral-900 absolute top-0 right-0 flex flex-col lg:hidden'>
+      className='w-[80%] z-[100] h-screen bg-neutral-900 absolute top-0 right-0 flex flex-col lg:hidden'>
       <div className='w-full h-20 flex items-center justify-end px-4'>
         <X onClick={click} className='text-white lg:size-8 size-8' />
       </div>
       <ul className='w-full h-[80%] flex gap-6 flex-col px-4 justify-center'>
-        {tabs.map((tab) => (<li className='text-2xl hover:border-b-2 hover:border-yellow-600'>{tab}</li>))}
+        {tabs.map((tab) => (<li className='text-2xl hover:border-b-2 hover:border-yellow-600 uppercase transition-all duration-300 ease-in-out'>{tab}</li>))}
       </ul>
     </motion.div>
   )

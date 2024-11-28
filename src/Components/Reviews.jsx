@@ -35,7 +35,7 @@ const ReviewCard = ({
 function Reviews({ reviews = [] }) {
     console.log(reviews);
     return (
-        <div className="relative flex h-[400px] w-full flex-col items-center justify-center overflow-hidden rounded-lg bg-black md:shadow-xl">
+        <div className="relative flex h-[200px] lg:h-[400px] w-full flex-col items-center justify-center overflow-hidden rounded-lg bg-black md:shadow-xl">
             <Marquee reverse pauseOnHover className="[--duration:20s] ">
                 {reviews.map((review) => (
                     <ReviewCard key={review.id} {...review} />
