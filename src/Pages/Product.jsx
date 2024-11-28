@@ -50,8 +50,8 @@ function Product() {
                 <LoaderCircle size={40} className='animate-spin' />
             </div> :
                 <>
-                    <div className='w-[80%] bg-neutral-900 rounded-md h-[70vh] flex items-center'>
-                        <div className='w-[50%] h-full  flex gap-4 flex-col items-center'>
+                    <div className='w-[80%] bg-neutral-900 rounded-md h-[70vh] flex flex-col lg:flex-row items-center'>
+                        <div className='w-full lg:w-[50%] h-full  flex gap-4 flex-col items-center'>
                             <img src={src} className='w-[60%] h-[70%] object-cover rounded' alt="" />
                             <div className='w-full h-16 px-5 flex justify-center items-center gap-4'>
                                 <img
@@ -72,7 +72,7 @@ function Product() {
                                 }
                             </div>
                         </div>
-                        <div className='w-[50%] gap-2 h-full flex flex-col p-8'>
+                        <div className='w-full lg:w-[50%] gap-2 h-full flex flex-col p-8'>
                             <h1 className='font-bold text-2xl'>{product?.name}</h1>
                             <div className='w-full h-14 flex items-center gap-5'>
                                 <Rate disabled allowHalf value={product?.rating} />
