@@ -37,7 +37,7 @@ const Tabs = ({ children, path }) => {
       className={({ isActive }) =>
         isActive
           ? 'border-b-4 border-yellow-600 text-white uppercase font-semibold'
-          : 'text-white uppercase font-semibold hover:border-b-2 hover:border-yellow-600 transition-all duration-300 ease-in-out'
+          : 'text-white uppercase font-semibold lg:text-sm hover:border-b-2 hover:border-yellow-600 transition-all duration-300 ease-in-out'
       }
     >
       {children}
@@ -46,7 +46,7 @@ const Tabs = ({ children, path }) => {
 }
 
 const MobileView = ({ click }) => {
-  const tabs = ['Home', 'Shop', 'About Us', 'Contact Us', 'Blog']
+  const tabs = ['Shop', 'About Us', 'Contact Us', 'Blog']
   return (
     <motion.div
       initial={{ x: '100%' }}
@@ -57,6 +57,7 @@ const MobileView = ({ click }) => {
         <X onClick={click} className='text-white lg:size-8 size-8' />
       </div>
       <ul className='w-full h-[80%] flex gap-6 flex-col px-4 justify-center'>
+      <Link to={`/`} className='text-2xl hover:border-b-2 hover:border-yellow-600 uppercase transition-all duration-300 ease-in-out'>home</Link>
         {tabs.map((tab) => (<Link key={tab} to={`/${tab.toLowerCase()}`} className='text-2xl hover:border-b-2 hover:border-yellow-600 uppercase transition-all duration-300 ease-in-out'>{tab}</Link>))}
       </ul>
     </motion.div>
