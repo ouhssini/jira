@@ -1,21 +1,26 @@
 import { Rate } from 'antd'
 import axios from 'axios'
 import { Facebook, LoaderCircle, Twitter } from 'lucide-react'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { BsTwitterX } from 'react-icons/bs'
-import { FaFacebook, FaInstagram, FaPinterest } from 'react-icons/fa'
+import { FaArrowLeft, FaFacebook, FaInstagram, FaPinterest } from 'react-icons/fa'
 import { useNavigate, useParams } from 'react-router-dom'
 import Reviews from '../Components/Reviews'
 import DemiCard from '../Components/DemiCard'
+import { CartContext } from '../lib/CartContext'
 
 function Product() {
     const { id } = useParams()
     const [product, setProduct] = useState({})
     const [loading, setLoading] = useState(true)
     const [relatedProducts, setRelatedProducts] = useState([])
+    const [quantity, setQuantity] = useState(1)
     const [src, setSrc] = useState()
     const [active, setActive] = useState(false)
+    const { ajouter, buttonRef, quantityRef } = useContext(CartContext)
     const navigate = useNavigate();
+
+
     useEffect(() => {
         const fetchProduct = async () => {
             setLoading(true);
@@ -44,12 +49,17 @@ function Product() {
 
     const reviewsLength = product?.reviews?.length
 
+
     return (
         <div className='w-full flex flex-col mt-5 items-center'>
             {loading ? <div className='w-full h-[30vh] flex items-center justify-center'>
                 <LoaderCircle size={40} className='animate-spin' />
             </div> :
                 <>
+                    <div onClick={() => navigate(-1)} className='w-[80%] mb-1 flex items-center gap-1 cursor-pointer group'>
+                        <FaArrowLeft className='text-md cursor-pointer group-hover:-translate-x-2 transition-all duration-200 ease-in-out' />
+                        <h1>Go Back</h1>
+                    </div>
                     <div className='w-[90%] lg:w-[80%] bg-neutral-900 rounded-md lg:h-[70vh] flex flex-col lg:flex-row items-center'>
                         <div className='w-full lg:w-[50%] h-full  flex gap-4 flex-col items-center'>
                             <img src={src} className='w-[60%] h-[70%] object-cover rounded' alt="" />
@@ -83,8 +93,8 @@ function Product() {
                                 {product?.description}
                             </p>
                             <div className='w-full h-12 flex items-center gap-5'>
-                                <input placeholder='1' min={1} type="number" className='w-[20%] lg:w-[10%] px-1 rounded-md h-full bg-black text-white flex items-center justify-center border' />
-                                <button className='w-full h-full bg-white rounded-md text-black flex items-center justify-center'>
+                                <input placeholder='1' min={1} type="number" ref={quantityRef} className='w-[20%] lg:w-[10%] px-1 rounded-md h-full bg-black text-white flex items-center justify-center border' />
+                                <button ref={buttonRef} onClick={() => ajouter(product)} className='w-full h-full bg-white rounded-md text-black flex items-center justify-center'>
                                     Add To Cart
                                 </button>
                             </div>
