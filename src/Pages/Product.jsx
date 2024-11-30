@@ -25,11 +25,11 @@ function Product() {
         const fetchProduct = async () => {
             setLoading(true);
             try {
-                const res = await axios.get(https://digitalgifter.store/products.php?id=${id});
+                const res = await axios.get(`https://digitalgifter.store/products.php?id=${id}`);
                 setProduct(res.data[0]);
                 setSrc(res.data[0]?.image || '')
 
-                const allProducts = await axios.get(https://digitalgifter.store/products.php)
+                const allProducts = await axios.get(`https://digitalgifter.store/products.php`)
                 const related = allProducts.data.filter(
                     (item) => item.category === res.data[0]?.category && item.id !== res.data[0]?.id
                 )
@@ -76,7 +76,7 @@ function Product() {
                                             onClick={() => handleImages(image)}
                                             className={src === image ? 'w-16 h-full cursor-pointer rounded-xl' : 'w-16 h-full cursor-pointer'}
                                         >
-                                            <img src={image} className={src === image ? 'w-16 h-full border-4 border-yellow-500 transition-all duration-300 ease-in-out cursor-pointer rounded-xl' : 'w-16 h-full cursor-pointer'} alt={product image ${index}} />
+                                            <img src={image} className={src === image ? 'w-16 h-full border-4 border-yellow-500 transition-all duration-300 ease-in-out cursor-pointer rounded-xl' : 'w-16 h-full cursor-pointer'} alt={`product image ${index}`} />
                                         </div>
                                     ))
                                 }
@@ -127,7 +127,7 @@ function Product() {
                     <div className='w-[80%] flex flex-col lg:flex-row items-center border-y-2 mb-3 justify-evenly p-6'>
                         {relatedProducts.length > 0 ? (
                             relatedProducts.map((item) => (
-                                <DemiCard key={item.id} img={item.image} click={() => navigate(/product/${item.id})} title={item.name} category={item.category} price={item.price} rating={item.rating} />
+                                <DemiCard key={item.id} img={item.image} click={() => navigate(`/product/${item.id}`)} title={item.name} category={item.category} price={item.price} rating={item.rating} />
                             ))
                         ) : (
                             <p>No related products found.</p>

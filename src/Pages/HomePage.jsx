@@ -15,7 +15,7 @@ function HomePage() {
     const limitedProducts = products.slice(0, 8);
     const [search, setSearch] = useState('');
     const toProduct = (id) => {
-        navigate(/product/${id});
+        navigate(`/product/${id}`);
     };
 
     
