@@ -66,8 +66,8 @@ const MobileView = ({ click }) => {
         <X onClick={click} className='text-white lg:size-8 size-8' />
       </div>
       <ul className='w-full h-[80%] flex gap-6 flex-col px-4 justify-center'>
-        <Link to={`/`} className='text-2xl hover:border-b-2 hover:border-yellow-600 uppercase transition-all duration-300 ease-in-out'>home</Link>
-        {tabs.map((tab) => (<Link key={tab} to={`/${tab.toLowerCase()}`} className='text-2xl hover:border-b-2 hover:border-yellow-600 uppercase transition-all duration-300 ease-in-out'>{tab}</Link>))}
+        <Link to={/} className='text-2xl hover:border-b-2 hover:border-yellow-600 uppercase transition-all duration-300 ease-in-out'>home</Link>
+        {tabs.map((tab) => (<Link key={tab} to={/${tab.toLowerCase()}} className='text-2xl hover:border-b-2 hover:border-yellow-600 uppercase transition-all duration-300 ease-in-out'>{tab}</Link>))}
       </ul>
     </motion.div>
   )

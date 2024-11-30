@@ -26,7 +26,7 @@ function Shop() {
     }, []);
 
     const toProduct = (id) => {
-        navigate(`/product/${id}`);
+        navigate(/product/${id});
     }
     return (
         <section className='w-full flex flex-col'>
