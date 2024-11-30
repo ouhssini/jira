@@ -3,7 +3,7 @@ import React from 'react'
 
 function Footer() {
   return (
-    <footer className='w-full p-4 flex h-[50vh] relative bottom-0'>
+    <footer className='w-full border-t border-gray-500 p-4 flex h-[50vh] relative bottom-0 flex-col gap-5 lg:gap-0 lg:flex-row'>
         <Holder>
             <h1 className='text-xl font-bold'>Contact us</h1>
             <ul className='w-full mt-3 flex flex-col'>

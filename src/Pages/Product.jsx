@@ -1,30 +1,35 @@
 import { Rate } from 'antd'
 import axios from 'axios'
 import { Facebook, LoaderCircle, Twitter } from 'lucide-react'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { BsTwitterX } from 'react-icons/bs'
-import { FaFacebook, FaInstagram, FaPinterest } from 'react-icons/fa'
+import { FaArrowLeft, FaFacebook, FaInstagram, FaPinterest } from 'react-icons/fa'
 import { useNavigate, useParams } from 'react-router-dom'
 import Reviews from '../Components/Reviews'
 import DemiCard from '../Components/DemiCard'
+import { CartContext } from '../lib/CartContext'
 
 function Product() {
     const { id } = useParams()
     const [product, setProduct] = useState({})
     const [loading, setLoading] = useState(true)
     const [relatedProducts, setRelatedProducts] = useState([])
+    const [quantity, setQuantity] = useState(1)
     const [src, setSrc] = useState()
     const [active, setActive] = useState(false)
+    const { ajouter, buttonRef, quantityRef } = useContext(CartContext)
     const navigate = useNavigate();
+
+
     useEffect(() => {
         const fetchProduct = async () => {
             setLoading(true);
             try {
-                const res = await axios.get(`https://digitalgifter.store/products.php?id=${id}`);
+                const res = await axios.get(https://digitalgifter.store/products.php?id=${id});
                 setProduct(res.data[0]);
                 setSrc(res.data[0]?.image || '')
 
-                const allProducts = await axios.get(`https://digitalgifter.store/products.php`)
+                const allProducts = await axios.get(https://digitalgifter.store/products.php)
                 const related = allProducts.data.filter(
                     (item) => item.category === res.data[0]?.category && item.id !== res.data[0]?.id
                 )
@@ -44,20 +49,25 @@ function Product() {
 
     const reviewsLength = product?.reviews?.length
 
+
     return (
         <div className='w-full flex flex-col mt-5 items-center'>
             {loading ? <div className='w-full h-[30vh] flex items-center justify-center'>
                 <LoaderCircle size={40} className='animate-spin' />
             </div> :
                 <>
-                    <div className='w-[80%] bg-neutral-800 rounded-md  flex items-center'>
-                        <div className='w-[50%] h-full  flex gap-4 flex-col items-center'>
+                    <div onClick={() => navigate(-1)} className='w-[80%] mb-1 flex items-center gap-1 cursor-pointer group'>
+                        <FaArrowLeft className='text-md cursor-pointer group-hover:-translate-x-2 transition-all duration-200 ease-in-out' />
+                        <h1>Go Back</h1>
+                    </div>
+                    <div className='w-[90%] lg:w-[80%] bg-neutral-900 rounded-md lg:h-[70vh] flex flex-col lg:flex-row items-center'>
+                        <div className='w-full lg:w-[50%] h-full  flex gap-4 flex-col items-center'>
                             <img src={src} className='w-[60%] h-[70%] object-cover rounded' alt="" />
                             <div className='w-full h-16 px-5 flex justify-center items-center gap-4'>
                                 <img
                                     src={product?.image}
                                     onClick={() => handleImages(product?.image)}
-                                    className={src === product?.image ? 'w-16 h-full border-4 transation-all duration-200 border-yellow-500  cursor-pointer rounded-xl' : 'w-16 h-full cursor-pointer'}
+                                    className={src === product?.image ? 'w-16 h-full border-4 border-yellow-600 transition-all duration-300 ease-in-out cursor-pointer rounded-xl' : 'w-16 h-full cursor-pointer'}
                                     alt="main product"
                                 />                                {
                                     product?.images.map((image, index) => (
@@ -66,25 +76,25 @@ function Product() {
                                             onClick={() => handleImages(image)}
                                             className={src === image ? 'w-16 h-full cursor-pointer rounded-xl' : 'w-16 h-full cursor-pointer'}
                                         >
-                                            <img src={image} className={src === image ? 'w-16 h-full border-4 transation-all duration-200 border-yellow-500  cursor-pointer rounded-xl' : 'w-16 h-full cursor-pointer'} alt={`product image ${index}`} />
+                                            <img src={image} className={src === image ? 'w-16 h-full border-4 border-yellow-500 transition-all duration-300 ease-in-out cursor-pointer rounded-xl' : 'w-16 h-full cursor-pointer'} alt={product image ${index}} />
                                         </div>
                                     ))
                                 }
                             </div>
                         </div>
-                        <div className='w-[50%] gap-2 h-full flex flex-col p-8'>
+                        <div className='w-full lg:w-[50%] gap-2 h-full flex flex-col p-3 lg:p-8'>
                             <h1 className='font-bold text-2xl'>{product?.name}</h1>
                             <div className='w-full h-14 flex items-center gap-5'>
                                 <Rate disabled allowHalf value={product?.rating} />
                                 <h1 className='text-md'>({reviewsLength} Custommers) </h1>
                             </div>
                             <h1 className='text-2xl font-bold'> ${product?.price}.00 </h1>
-                            <p className='w-full h-[10vh] flex items-center'>
+                            <p className='w-full lg:h-[10vh] flex items-center'>
                                 {product?.description}
                             </p>
-                            <div className='w-full h-12 flex items-center gap-5 my-3'>
-                                <input placeholder='1' min={1} type="number" className='w-[10%] px-1 rounded-md h-full bg-black text-white flex items-center justify-center border' />
-                                <button className='w-full h-full bg-white rounded-md text-black flex items-center justify-center'>
+                            <div className='w-full h-12 flex items-center gap-5'>
+                                <input placeholder='1' min={1} type="number" ref={quantityRef} className='w-[20%] lg:w-[10%] px-1 rounded-md h-full bg-black text-white flex items-center justify-center border' />
+                                <button ref={buttonRef} onClick={() => ajouter(product)} className='w-full h-full bg-white rounded-md text-black flex items-center justify-center'>
                                     Add To Cart
                                 </button>
                             </div>
@@ -114,10 +124,10 @@ function Product() {
                         <Reviews reviews={product?.reviews} />
                     </div>
                     <h1 className='font-bold text-4xl mt-4'>Related Products</h1>
-                    <div className='w-[80%] flex items-center border-y-2 mb-3 justify-evenly p-6'>
+                    <div className='w-[80%] flex flex-col lg:flex-row items-center border-y-2 mb-3 justify-evenly p-6'>
                         {relatedProducts.length > 0 ? (
                             relatedProducts.map((item) => (
-                                <DemiCard key={item.id} img={item.image} click={() => navigate(`/product/${item.id}`)} title={item.name} category={item.category} price={item.price} rating={item.rating} />
+                                <DemiCard key={item.id} img={item.image} click={() => navigate(/product/${item.id})} title={item.name} category={item.category} price={item.price} rating={item.rating} />
                             ))
                         ) : (
                             <p>No related products found.</p>
